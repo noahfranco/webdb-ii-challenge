@@ -5,7 +5,7 @@ exports.up = function(knex) {
       tbl.text("NIV").unique().notNullable()
       tbl.string("make").notNullable()
       tbl.string("model").notNullable()
-      tbl.decimal("mileage").notNullable()
+      tbl.integer("mileage").notNullable()
   })
 };
 
