@@ -1,40 +1,42 @@
-const express = require("express"); 
+const express = require("express");
+
+// What is this doing below ???
 const knex = require("knex"); 
 
+const knexConfig = require("./knexfile.js");
 
-// What this doing????
-const Knexfile = require("./knexfile.js"); 
-// What is this doing???
-
-
-// What is this doing???
-const db = knex(Knexfile.development); 
-// What is this doing???
-
+const db = knex(knexConfig.development)
+// What is this doing above??? 
 
 const router = express.Router()
 
 router.get("/", (req, res) => {
-    
+    db.select("*")
+    .from("cars")
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({error: "Something Went Wrong"})
+    })
 });
 
 router.post("/", (req, res) => {
-    
+    const body = req.body 
+
+    // db.select("*")
+    // .from("cars")
+    db("cars")
+    .insert(body)
+    .then(response => {
+        res.status(200).json(response)
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({error: "Something Went Wrong"})
+    })
 });
-
-router.get("/:id", (req, res) => {
-    
-});
-
-router.put("/:id", (req, res) => {
-    
-}); 
-
-router.delete("/:id", (req, res) => {
-
-})
-
-
 
 module.exports = router; 
 
